@@ -8,6 +8,7 @@ type UserResponseDto {
   last_name: String!
   email: String!
   access_token: String!
+  refresh_token: String!
   created_at: Float!
   updated_at: Float!
 }

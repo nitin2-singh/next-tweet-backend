@@ -25,6 +25,10 @@ export class UserResponseDto {
 
   @Expose()
   @Field()
+  refresh_token: string;
+
+  @Expose()
+  @Field()
   created_at: number;
 
   @Expose()
