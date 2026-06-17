@@ -13,13 +13,21 @@ type UserResponseDto {
   updated_at: Float!
 }
 
+type FeedResponseDto {
+  id: ID!
+  content: String!
+  created_at: Float!
+}
+
 type Query {
   profile: UserResponseDto!
+  feed(page: Int! = 1, limit: Int! = 20): [FeedResponseDto!]!
 }
 
 type Mutation {
   signup(input: CreateUserDto!): UserResponseDto!
   login(input: LoginUserDto!): UserResponseDto!
+  createPost(input: CreatePostInput!): FeedResponseDto!
 }
 
 input CreateUserDto {
@@ -32,4 +40,8 @@ input CreateUserDto {
 input LoginUserDto {
   email: String!
   password: String!
+}
+
+input CreatePostInput {
+  content: String!
 }

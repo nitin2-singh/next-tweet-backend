@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { UserFollow } from './followers.entity';
 
 @Entity('users')
 export class User {
@@ -26,6 +27,12 @@ export class User {
     select: false,
   })
   password: string;
+
+  @OneToMany(() => UserFollow, (follow) => follow.follower)
+  following: UserFollow[];
+
+  @OneToMany(() => UserFollow, (follow) => follow.following)
+  followers: UserFollow[];
 
   @Column({
     type: 'bigint',

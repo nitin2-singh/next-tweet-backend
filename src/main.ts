@@ -24,6 +24,10 @@ async function bootstrap() {
   console.log(`Server is running on port 💻 ${port}`);
 }
 
-bootstrap().catch((error) => {
-  console.error('Error starting the server:', error);
-});
+bootstrap()
+  .then(() => {
+    console.log('Starting the server');
+  })
+  .catch((error) => {
+    console.error('Error starting the server:', error);
+  });

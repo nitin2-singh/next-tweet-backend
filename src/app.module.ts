@@ -10,6 +10,7 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path';
 import { APP_GUARD } from '@nestjs/core';
 import { GqlAuthGuard } from './guard/gql.guard';
+import { FeedModule } from './feed/feed.module';
 
 @Module({
   imports: [
@@ -39,8 +40,8 @@ import { GqlAuthGuard } from './guard/gql.guard';
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       playground: true,
     }),
-
     AuthModule,
+    FeedModule,
   ],
   controllers: [AppController],
   providers: [

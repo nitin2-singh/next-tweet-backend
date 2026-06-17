@@ -7,10 +7,11 @@ import { User } from 'src/entities/user/user.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from 'src/strategy/jwt.straregy';
+import { UserFollow } from 'src/entities/user/followers.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User]),
+    TypeOrmModule.forFeature([User, UserFollow]),
     PassportModule.register({
       defaultStrategy: 'jwt',
     }),
