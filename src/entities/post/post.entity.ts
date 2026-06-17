@@ -4,8 +4,11 @@ import {
   PrimaryGeneratedColumn,
   ManyToOne,
   JoinColumn,
+  OneToMany,
 } from 'typeorm';
 import { User } from '../user/user.entity';
+import { Comment } from './comments.entity';
+import { PostLike } from './likes.entity';
 
 @Entity('posts')
 export class Post {
@@ -18,6 +21,12 @@ export class Post {
 
   @Column()
   user_id: string;
+
+  @OneToMany(() => Comment, (comment) => comment.post)
+  comments: Comment[];
+
+  @OneToMany(() => PostLike, (like) => like.post)
+  likes: PostLike[];
 
   @Column({
     type: 'text',

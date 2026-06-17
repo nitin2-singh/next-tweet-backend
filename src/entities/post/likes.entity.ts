@@ -22,7 +22,9 @@ export class PostLike {
   @Column()
   user_id: string;
 
-  @ManyToOne(() => Post)
+  @ManyToOne(() => Post, (post) => post.likes, {
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({ name: 'post_id' })
   post: Post;
 

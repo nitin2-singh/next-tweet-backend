@@ -1,5 +1,8 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { UserFollow } from './followers.entity';
+import { Comment } from '../post/comments.entity';
+import { PostLike } from '../post/likes.entity';
+import { Post } from '../post/post.entity';
 
 @Entity('users')
 export class User {
@@ -33,6 +36,15 @@ export class User {
 
   @OneToMany(() => UserFollow, (follow) => follow.following)
   followers: UserFollow[];
+
+  @OneToMany(() => Comment, (comment) => comment.user)
+  comments: Comment[];
+
+  @OneToMany(() => PostLike, (like) => like.user)
+  likes: PostLike[];
+
+  @OneToMany(() => Post, (post) => post.user)
+  post: Post[];
 
   @Column({
     type: 'bigint',

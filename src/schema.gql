@@ -9,6 +9,7 @@ type UserResponseDto {
   email: String!
   access_token: String!
   refresh_token: String!
+  is_following: Boolean!
   created_at: Float!
   updated_at: Float!
 }
@@ -17,16 +18,45 @@ type FeedResponseDto {
   id: ID!
   content: String!
   created_at: Float!
+  owner_id: String!
+  first_name: String!
+  last_name: String!
+  like_count: Float!
+  is_following: Boolean!
+  is_liked: Boolean!
+  comment_count: Float!
+}
+
+type ToggleFollowResponseDto {
+  following: Boolean!
+}
+
+type CommentResponseDto {
+  id: ID!
+  content: String!
+  created_at: Float!
+  first_name: String!
+  last_name: String!
+}
+
+type ToggleLikeResponseDto {
+  liked: Boolean!
+  like_count: Int!
 }
 
 type Query {
   profile: UserResponseDto!
   feed(page: Int! = 1, limit: Int! = 20): [FeedResponseDto!]!
+  comments(post_id: String!, page: Int! = 1, limit: Int! = 10): [CommentResponseDto!]!
+  suggestedUsers(page: Int! = 1, limit: Int! = 10, search: String): [UserResponseDto!]!
 }
 
 type Mutation {
   signup(input: CreateUserDto!): UserResponseDto!
   login(input: LoginUserDto!): UserResponseDto!
+  toggleFollow(followingId: String!): ToggleFollowResponseDto!
+  togglePostLike(postId: String!): ToggleLikeResponseDto!
+  createComment(input: CreateCommentInput!): CommentResponseDto!
   createPost(input: CreatePostInput!): FeedResponseDto!
 }
 
@@ -40,6 +70,11 @@ input CreateUserDto {
 input LoginUserDto {
   email: String!
   password: String!
+}
+
+input CreateCommentInput {
+  post_id: String!
+  content: String!
 }
 
 input CreatePostInput {

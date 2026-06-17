@@ -27,6 +27,10 @@ export class UserResponseDto {
   @Field()
   refresh_token: string;
 
+  @Field()
+  @Expose()
+  is_following?: boolean;
+
   @Expose()
   @Field()
   created_at: number;
