@@ -54,19 +54,26 @@ export class AuthService {
         throw new ConflictException('Email already exists');
       }
 
-      const user = manager.create(User, {
+      let user = manager.create(User, {
         ...input,
         password: hashed_password,
+        access_token: '',
+        refresh_token: '',
       });
-
-      const tokens = await this.generate_tokens(user);
-      user.access_token = tokens.access_token;
-      user.refresh_token = tokens.refresh_token;
 
       const epoch = Math.floor(Date.now() / 1000);
       user.created_at = epoch;
       user.updated_at = epoch;
 
+      // 1. Save user to generate the UUID
+      user = await manager.save(User, user);
+
+      // 2. Generate tokens now that user.id is populated
+      const tokens = await this.generate_tokens(user);
+      user.access_token = tokens.access_token;
+      user.refresh_token = tokens.refresh_token;
+
+      // 3. Save the user again with the generated tokens
       return plainToInstance(UserResponseDto, await manager.save(User, user), {
         excludeExtraneousValues: true,
       });
