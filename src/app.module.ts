@@ -29,6 +29,10 @@ import { FeedModule } from './feed/feed.module';
           password: db.password,
           database: db.database,
 
+          ssl: {
+            rejectUnauthorized: false,
+          },
+
           autoLoadEntities: true,
           synchronize: false,
         };
